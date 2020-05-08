@@ -39,19 +39,21 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('パスワード管理'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
+      body: ListView(
+        children: <Widget>[
+          ListTile(
+            title: Text('Amazon'),
+            leading: Icon(Icons.vpn_key),
+          ),
+          ListTile(
+            title: Text('楽天'),
+            leading: Icon(Icons.vpn_key),
+          ),
+          ListTile(
+            title: Text('Yahoo!'),
+            leading: Icon(Icons.vpn_key),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
