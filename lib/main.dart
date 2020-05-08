@@ -45,14 +45,17 @@ class _MyHomePageState extends State<MyHomePage> {
             title: Text('Amazon'),
             leading: Icon(Icons.vpn_key),
           ),
+          Divider(),
           ListTile(
             title: Text('楽天'),
             leading: Icon(Icons.vpn_key),
           ),
+          Divider(),
           ListTile(
             title: Text('Yahoo!'),
             leading: Icon(Icons.vpn_key),
           ),
+          Divider(),
         ],
       ),
       floatingActionButton: FloatingActionButton(
