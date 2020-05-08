@@ -61,3 +61,12 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+//todo ホーム画面のタイトル変更
+//todo リスト表示
+//todo フロートアクションボタンをタップしたときに、リストにひとつ追加
+//todo 新しい画面を作成し、リストをタップしたときに遷移
+//todo 新しい画面のレイアウトを作成
+//todo 新しい画面にリストからデータを引き継ぐ
+
+
