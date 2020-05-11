@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   title: Text(titleList[i]),
                   leading: Icon(Icons.vpn_key),
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => NextPage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => NextPage(titleList[i])));
                   },
                 ),
                 Divider(),
@@ -67,6 +67,5 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 
-//todo 新しい画面にリストからデータを引き継ぐ
 
 
