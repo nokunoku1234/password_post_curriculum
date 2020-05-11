@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:starter_course/next_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -41,6 +42,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 ListTile(
                   title: Text(titleList[i]),
                   leading: Icon(Icons.vpn_key),
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => NextPage()));
+                  },
                 ),
                 Divider(),
               ],
@@ -63,7 +67,6 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 
-//todo 新しい画面を作成し、リストをタップしたときに遷移
 //todo 新しい画面のレイアウトを作成
 //todo 新しい画面にリストからデータを引き継ぐ
 
