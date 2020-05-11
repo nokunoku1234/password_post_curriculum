@@ -25,14 +25,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   List<String> titleList = ['Amazon', '楽天', 'Yahoo!'];
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +49,12 @@ class _MyHomePageState extends State<MyHomePage> {
           itemCount: titleList.length,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () {
+          titleList.add('Google');
+          setState(() {
+
+          });
+        },
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
@@ -64,7 +63,6 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 
-//todo フロートアクションボタンをタップしたときに、リストにひとつ追加
 //todo 新しい画面を作成し、リストをタップしたときに遷移
 //todo 新しい画面のレイアウトを作成
 //todo 新しい画面にリストからデータを引き継ぐ
