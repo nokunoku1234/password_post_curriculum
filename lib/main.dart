@@ -26,6 +26,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  List<String> titleList = ['Amazon', '楽天', 'Yahoo!'];
 
   void _incrementCounter() {
     setState(() {
@@ -39,24 +40,19 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('パスワード管理'),
       ),
-      body: ListView(
-        children: <Widget>[
-          ListTile(
-            title: Text('Amazon'),
-            leading: Icon(Icons.vpn_key),
-          ),
-          Divider(),
-          ListTile(
-            title: Text('楽天'),
-            leading: Icon(Icons.vpn_key),
-          ),
-          Divider(),
-          ListTile(
-            title: Text('Yahoo!'),
-            leading: Icon(Icons.vpn_key),
-          ),
-          Divider(),
-        ],
+      body: ListView.builder(
+          itemBuilder: (BuildContext context, int i) {
+            return Column(
+              children: <Widget>[
+                ListTile(
+                  title: Text(titleList[i]),
+                  leading: Icon(Icons.vpn_key),
+                ),
+                Divider(),
+              ],
+            );
+          },
+          itemCount: titleList.length,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
@@ -67,8 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-//todo ホーム画面のタイトル変更
-//todo リスト表示
+
 //todo フロートアクションボタンをタップしたときに、リストにひとつ追加
 //todo 新しい画面を作成し、リストをタップしたときに遷移
 //todo 新しい画面のレイアウトを作成
