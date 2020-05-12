@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:starter_course/next_page.dart';
+import 'package:starter_course/add_password.dart';
 
 void main() => runApp(MyApp());
 
@@ -42,9 +42,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ListTile(
                   title: Text(titleList[i]),
                   leading: Icon(Icons.vpn_key),
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => NextPage(titleList[i])));
-                  },
                 ),
                 Divider(),
               ],
@@ -54,10 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          titleList.add('Google');
-          setState(() {
-
-          });
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AddPassword()));
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
@@ -66,7 +60,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-//todo パスワード追加画面の大枠作成
 //todo パスワード確認画面の大枠作成
 //todo リスト追加
 //todo クリップボードコピー
