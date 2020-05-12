@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:starter_course/add_password.dart';
+import 'package:starter_course/confirm_pass.dart';
 
 void main() => runApp(MyApp());
 
@@ -42,6 +43,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 ListTile(
                   title: Text(titleList[i]),
                   leading: Icon(Icons.vpn_key),
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmPass()));
+                  },
                 ),
                 Divider(),
               ],
@@ -60,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-//todo パスワード確認画面の大枠作成
+//todo パスワード追加画面で情報入力
 //todo リスト追加
 //todo クリップボードコピー
 //todo スライダブル実装
