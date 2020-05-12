@@ -70,7 +70,21 @@ class _AddPasswordState extends State<AddPassword> {
                 ),
               ],
             ),
-            Padding(padding: EdgeInsets.all(20.0),),
+            Padding(padding: EdgeInsets.all(20.0),
+            ),
+            Container(
+              width: double.infinity,
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(5.0))
+                ),
+                color: Colors.blue,
+                onPressed: () {
+
+                },
+                child: Text('追加', style: TextStyle(color: Colors.white),),
+              ),
+            ),
           ],
         ),
       ),

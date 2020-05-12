@@ -64,7 +64,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-//todo パスワード追加ボタン実装
 //todo リスト追加
 //todo クリップボードコピー
 //todo スライダブル実装
