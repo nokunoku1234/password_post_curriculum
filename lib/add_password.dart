@@ -24,7 +24,15 @@ class _AddPasswordState extends State<AddPassword> {
                   width: 100,
                   child: Text('タイトル'),
                 ),
-                Text('テストタイトル'),
+                Expanded(
+                  child: TextField(
+                    enabled: true,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'タイトル'
+                    ),
+                  ),
+                ),
               ],
             ),
             Padding(padding: EdgeInsets.all(10.0),),
@@ -34,7 +42,14 @@ class _AddPasswordState extends State<AddPassword> {
                   width: 100,
                   child: Text('ID'),
                 ),
-                Text('テストID'),
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'ID'
+                    ),
+                  ),
+                ),
               ],
             ),
             Padding(padding: EdgeInsets.all(10.0),),
@@ -44,9 +59,18 @@ class _AddPasswordState extends State<AddPassword> {
                   width: 100,
                   child: Text('パスワード'),
                 ),
-                Text('テストパスワード'),
+                Expanded(
+                  child: TextField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'パスワード'
+                    ),
+                  ),
+                ),
               ],
             ),
+            Padding(padding: EdgeInsets.all(20.0),),
           ],
         ),
       ),
