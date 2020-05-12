@@ -66,6 +66,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-
+//todo パスワード追加画面の大枠作成
+//todo パスワード確認画面の大枠作成
+//todo リスト追加
+//todo クリップボードコピー
+//todo スライダブル実装
+//todo テーマカラー変更
+//todo ダイアログ表示
 
 
