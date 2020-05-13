@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmPass(titleList, i)));
                   },
                 ),
-                Divider(),
+                Divider(height: 0.0,),
               ],
             );
           },
