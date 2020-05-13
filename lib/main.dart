@@ -21,7 +21,7 @@ class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
-  
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   title: Text(titleList[i]),
                   leading: Icon(Icons.vpn_key),
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmPass()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmPass(titleList, i)));
                   },
                 ),
                 Divider(),
@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-//todo パスワード確認画面に削除ボタンを追加し、ボタンタップでリスト削除
+//todo IDとPWのListも作成し情報管理する
 //todo クリップボードコピー
 //todo スライダブル実装
 //todo テーマカラー変更
