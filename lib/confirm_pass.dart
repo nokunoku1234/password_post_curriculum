@@ -41,53 +41,63 @@ class _ConfirmPassState extends State<ConfirmPass> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('パスワード確認'),),
-      body: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              Container(
-                width: 300,
-                height: 50,
-                child: OutlineButton(
-                  borderSide: BorderSide(color: Colors.black),
-                  shape: StadiumBorder(),
-                  onPressed: () {
-                    iDClipboardCopy();
-                  },
-                  child: Text('IDを表示'),
+      body: Builder(
+        builder: (BuildContext context) {
+          return Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Center(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    width: 300,
+                    height: 50,
+                    child: OutlineButton(
+                      borderSide: BorderSide(color: Colors.black),
+                      shape: StadiumBorder(),
+                      onPressed: () {
+                        iDClipboardCopy();
+                        Scaffold.of(context).showSnackBar(
+                            SnackBar(content: Text('IDをコピー'), duration: Duration(seconds: 1),)
+                        );
+                      },
+                      child: Text('IDをコピー'),
 
-                ),
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.all(20.0),),
+                  Container(
+                    width: 300,
+                    height: 50,
+                    child: OutlineButton(
+                      borderSide: BorderSide(color: Colors.black),
+                      shape: StadiumBorder(),
+                      onPressed: () {
+                        pwClipboardCopy();
+                        Scaffold.of(context).showSnackBar(
+                            SnackBar(content: Text('PWをコピー'), duration: Duration(seconds: 1),)
+                        );
+                      },
+                      child: Text('パスワードをコピー')
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.all(30.0),),
+                  Container(
+                    width: 300,
+                    height: 50,
+                    child: RaisedButton(
+                      shape: StadiumBorder(),
+                      color: Colors.red,
+                      child: Text('削除', style: TextStyle(color: Colors.white),),
+                      onPressed: () {
+                        deleteList();
+                      },
+                    ),
+                  ),
+                ],
               ),
-              Padding(padding: EdgeInsets.all(20.0),),
-              Container(
-                width: 300,
-                height: 50,
-                child: OutlineButton(
-                  borderSide: BorderSide(color: Colors.black),
-                  shape: StadiumBorder(),
-                  onPressed: () {
-                    pwClipboardCopy();
-                  },
-                  child: Text('パスワードを表示')
-                ),
-              ),
-              Padding(padding: EdgeInsets.all(30.0),),
-              Container(
-                width: 300,
-                height: 50,
-                child: RaisedButton(
-                  shape: StadiumBorder(),
-                  color: Colors.red,
-                  child: Text('削除', style: TextStyle(color: Colors.white),),
-                  onPressed: () {
-                    deleteList();
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        }
       ),
     );
   }
