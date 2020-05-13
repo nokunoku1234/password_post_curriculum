@@ -21,14 +21,13 @@ class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
-
+  
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   List<String> titleList = ['Amazon', '楽天', 'Yahoo!'];
-
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => AddPassword()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AddPassword(titleList)));
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
@@ -64,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-//todo リスト追加
+//todo パスワード確認画面に削除ボタンを追加し、ボタンタップでリスト削除
 //todo クリップボードコピー
 //todo スライダブル実装
 //todo テーマカラー変更

@@ -2,11 +2,23 @@ import 'package:flutter/material.dart';
 
 class AddPassword extends StatefulWidget {
 
+  final List<String> titleList;
+  AddPassword(this.titleList);
+
   @override
   _AddPasswordState createState() => _AddPasswordState();
 }
 
 class _AddPasswordState extends State<AddPassword> {
+
+  TextEditingController titleController = TextEditingController();
+  TextEditingController idController = TextEditingController();
+  TextEditingController pwController = TextEditingController();
+
+  void addPassword() {
+    widget.titleList.add(titleController.text);
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +38,7 @@ class _AddPasswordState extends State<AddPassword> {
                 ),
                 Expanded(
                   child: TextField(
-                    enabled: true,
+                    controller: titleController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'タイトル'
@@ -44,6 +56,7 @@ class _AddPasswordState extends State<AddPassword> {
                 ),
                 Expanded(
                   child: TextField(
+                    controller: idController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'ID'
@@ -61,6 +74,7 @@ class _AddPasswordState extends State<AddPassword> {
                 ),
                 Expanded(
                   child: TextField(
+                    controller: pwController,
                     obscureText: true,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
@@ -80,7 +94,7 @@ class _AddPasswordState extends State<AddPassword> {
                 ),
                 color: Colors.blue,
                 onPressed: () {
-
+                  addPassword();
                 },
                 child: Text('追加', style: TextStyle(color: Colors.white),),
               ),
