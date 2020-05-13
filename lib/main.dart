@@ -66,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-//todo クリップボードコピー
+//todo SnackBar表示
 //todo スライダブル実装
 //todo テーマカラー変更
 //todo ダイアログ表示

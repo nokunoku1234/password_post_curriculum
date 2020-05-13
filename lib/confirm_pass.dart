@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ConfirmPass extends StatefulWidget {
 
@@ -24,6 +25,18 @@ class _ConfirmPassState extends State<ConfirmPass> {
     print('pw: ${widget.pwList}');
   }
 
+  void iDClipboardCopy() async{
+    var idData = ClipboardData(text: widget.idList[widget.i]);
+    await Clipboard.setData(idData);
+    print('IDコピー');
+  }
+
+  void pwClipboardCopy() async{
+    var pwData = ClipboardData(text: widget.pwList[widget.i]);
+    await Clipboard.setData(pwData);
+    print('PWコピー');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +53,7 @@ class _ConfirmPassState extends State<ConfirmPass> {
                   borderSide: BorderSide(color: Colors.black),
                   shape: StadiumBorder(),
                   onPressed: () {
-
+                    iDClipboardCopy();
                   },
                   child: Text('IDを表示'),
 
@@ -54,7 +67,7 @@ class _ConfirmPassState extends State<ConfirmPass> {
                   borderSide: BorderSide(color: Colors.black),
                   shape: StadiumBorder(),
                   onPressed: () {
-
+                    pwClipboardCopy();
                   },
                   child: Text('パスワードを表示')
                 ),
