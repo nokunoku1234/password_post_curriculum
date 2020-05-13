@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 class ConfirmPass extends StatefulWidget {
 
-  final List<String> titleList;
   final int i;
-  ConfirmPass(this.titleList, this.i);
+  final List<String> titleList;
+  final List<String> idList;
+  final List<String> pwList;
+  ConfirmPass(this.i, this.titleList, this.idList, this.pwList);
 
   @override
   _ConfirmPassState createState() => _ConfirmPassState();
@@ -14,7 +16,12 @@ class _ConfirmPassState extends State<ConfirmPass> {
 
   void deleteList() {
     widget.titleList.removeAt(widget.i);
+    widget.idList.removeAt(widget.i);
+    widget.pwList.removeAt(widget.i);
     Navigator.pop(context);
+
+    print('id: ${widget.idList}');
+    print('pw: ${widget.pwList}');
   }
 
   @override

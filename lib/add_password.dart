@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class AddPassword extends StatefulWidget {
 
   final List<String> titleList;
-  AddPassword(this.titleList);
+  final List<String> idList;
+  final List<String> pwList;
+  AddPassword(this.titleList, this.idList, this.pwList);
 
   @override
   _AddPasswordState createState() => _AddPasswordState();
@@ -17,7 +19,11 @@ class _AddPasswordState extends State<AddPassword> {
 
   void addPassword() {
     widget.titleList.add(titleController.text);
+    widget.idList.add(idController.text);
+    widget.pwList.add(pwController.text);
     Navigator.pop(context);
+    print('id: ${widget.idList}');
+    print('pw: ${widget.pwList}');
   }
 
   @override

@@ -27,7 +27,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
   List<String> titleList = ['Amazon', '楽天', 'Yahoo!'];
+  List<String> idList = ['Amazon', '楽天', 'Yahoo!'];
+  List<String> pwList = ['Amazon', '楽天', 'Yahoo!'];
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   title: Text(titleList[i]),
                   leading: Icon(Icons.vpn_key),
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmPass(titleList, i)));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmPass(i, titleList, idList, pwList)));
                   },
                 ),
                 Divider(height: 0.0,),
@@ -54,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => AddPassword(titleList)));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AddPassword(titleList, idList, pwList)));
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
@@ -63,7 +66,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-//todo IDとPWのListも作成し情報管理する
 //todo クリップボードコピー
 //todo スライダブル実装
 //todo テーマカラー変更
