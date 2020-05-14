@@ -66,6 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
+//todo 登録情報編集ページのレイアウト作成
 //todo 登録情報の編集
 //todo 確認画面のパスワードの表示・非表示の切り替え
 //todo スライダブル実装

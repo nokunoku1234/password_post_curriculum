@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:starter_course/edit_page.dart';
 
 class ConfirmPass extends StatefulWidget {
 
@@ -40,7 +41,17 @@ class _ConfirmPassState extends State<ConfirmPass> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('パスワード確認'),),
+      appBar: AppBar(
+        title: Text(widget.titleList[widget.i]),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => EditPage()));
+            }
+          )
+        ],
+      ),
       body: Builder(
         builder: (BuildContext context) {
           return Padding(
