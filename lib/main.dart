@@ -66,7 +66,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-//todo 確認画面のパスワードの表示・非表示の切り替え
 //todo スライダブル実装
 //todo テーマカラー変更
 //todo ダイアログ表示

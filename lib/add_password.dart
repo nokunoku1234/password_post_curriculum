@@ -17,6 +17,8 @@ class _AddPasswordState extends State<AddPassword> {
   TextEditingController idController = TextEditingController();
   TextEditingController pwController = TextEditingController();
 
+  bool _showPassword = false;
+
   void addPassword() {
     widget.titleList.add(titleController.text);
     widget.idList.add(idController.text);
@@ -81,10 +83,22 @@ class _AddPasswordState extends State<AddPassword> {
                 Expanded(
                   child: TextField(
                     controller: pwController,
-                    obscureText: true,
+                    obscureText: _showPassword ? false : true,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      hintText: 'パスワード'
+                      hintText: 'パスワード',
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          Icons.remove_red_eye,
+                          color: _showPassword ? Colors.blue : Colors.grey,
+                        ),
+                        onPressed: () {
+                          _showPassword = !_showPassword;
+                          setState(() {
+
+                          });
+                        },
+                      ),
                     ),
                   ),
                 ),

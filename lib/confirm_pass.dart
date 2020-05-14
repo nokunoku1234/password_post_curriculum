@@ -21,21 +21,18 @@ class _ConfirmPassState extends State<ConfirmPass> {
     widget.idList.removeAt(widget.i);
     widget.pwList.removeAt(widget.i);
     Navigator.pop(context);
-
-    print('id: ${widget.idList}');
-    print('pw: ${widget.pwList}');
   }
+
+
 
   void iDClipboardCopy() async{
     var idData = ClipboardData(text: widget.idList[widget.i]);
     await Clipboard.setData(idData);
-    print('IDコピー');
   }
 
   void pwClipboardCopy() async{
     var pwData = ClipboardData(text: widget.pwList[widget.i]);
     await Clipboard.setData(pwData);
-    print('PWコピー');
   }
 
   @override
