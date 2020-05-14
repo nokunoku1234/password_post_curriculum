@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:starter_course/add_password.dart';
 import 'package:starter_course/confirm_pass.dart';
+
+import 'method.dart';
 
 void main() => runApp(MyApp());
 
@@ -38,22 +42,55 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('パスワード管理'),
       ),
-      body: ListView.builder(
-          itemBuilder: (BuildContext context, int i) {
-            return Column(
-              children: <Widget>[
-                ListTile(
-                  title: Text(titleList[i]),
-                  leading: Icon(Icons.vpn_key),
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmPass(i, titleList, idList, pwList)));
-                  },
-                ),
-                Divider(height: 0.0,),
-              ],
-            );
-          },
-          itemCount: titleList.length,
+      body: Builder(
+        builder: (BuildContext context) {
+          return ListView.builder(
+              itemBuilder: (BuildContext context, int i) {
+                return Column(
+                  children: <Widget>[
+                    Slidable(
+                      actionPane: SlidableDrawerActionPane(),
+                      actions: <Widget>[
+                        IconSlideAction(
+                          icon: Icons.content_copy,
+                          color: Colors.blue,
+                          caption: 'ID',
+                          onTap: () {
+                            Copy.idCopy(idList[i]);
+                            Scaffold.of(context).showSnackBar(
+                              SnackBar(content: Text('IDをコピーしました'), duration: Duration(seconds: 1),)
+                            );
+                          },
+                        ),
+                      ],
+                      secondaryActions: <Widget>[
+                        IconSlideAction(
+                          icon: Icons.content_copy,
+                          color: Colors.blue,
+                          caption: 'PW',
+                          onTap: () {
+                            Copy.pwCopy(pwList[i]);
+                            Scaffold.of(context).showSnackBar(
+                                SnackBar(content: Text('パスワードをコピーしました'), duration: Duration(seconds: 1),)
+                            );
+                          },
+                        ),
+                      ],
+                      child: ListTile(
+                        title: Text(titleList[i]),
+                        leading: Icon(Icons.vpn_key),
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmPass(i, titleList, idList, pwList)));
+                        },
+                      ),
+                    ),
+                    Divider(height: 0.0,),
+                  ],
+                );
+              },
+              itemCount: titleList.length,
+          );
+        }
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
