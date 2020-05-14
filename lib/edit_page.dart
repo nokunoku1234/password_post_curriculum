@@ -2,11 +2,32 @@ import 'package:flutter/material.dart';
 
 class EditPage extends StatefulWidget {
 
+  final int i;
+  final List<String> titleList;
+  final List<String> idList;
+  final List<String> pwList;
+
+  EditPage(this.i, this.titleList, this.idList, this.pwList);
+
   @override
   _EditPageState createState() => _EditPageState();
 }
 
 class _EditPageState extends State<EditPage> {
+
+  TextEditingController titleController = TextEditingController();
+  TextEditingController idController = TextEditingController();
+  TextEditingController pwController = TextEditingController();
+
+  void editPassword() {
+    widget.titleList[widget.i] = titleController.text;
+    widget.idList[widget.i] = idController.text;
+    widget.pwList[widget.i] = pwController.text;
+    Navigator.pop(context);
+
+    print('id: ${widget.idList}');
+    print('pw: ${widget.pwList}');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +45,7 @@ class _EditPageState extends State<EditPage> {
                 ),
                 Expanded(
                   child: TextField(
+                    controller: titleController,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'タイトル'
@@ -41,6 +63,7 @@ class _EditPageState extends State<EditPage> {
                 ),
                 Expanded(
                   child: TextField(
+                    controller: idController,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'ID'
@@ -58,6 +81,7 @@ class _EditPageState extends State<EditPage> {
                 ),
                 Expanded(
                   child: TextField(
+                    controller: pwController,
                     obscureText: true,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
@@ -77,6 +101,7 @@ class _EditPageState extends State<EditPage> {
                 ),
                 color: Colors.blue,
                 onPressed: () {
+                  editPassword();
                 },
                 child: Text('修正', style: TextStyle(color: Colors.white),),
               ),

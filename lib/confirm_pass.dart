@@ -47,7 +47,7 @@ class _ConfirmPassState extends State<ConfirmPass> {
           IconButton(
             icon: Icon(Icons.edit),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => EditPage()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => EditPage(widget.i, widget.titleList, widget.idList, widget.pwList)));
             }
           )
         ],
