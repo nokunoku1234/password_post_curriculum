@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:starter_course/db.dart';
+import 'package:starter_course/model.dart';
 import 'add_password.dart';
 import 'confirm_pass.dart';
 import 'method.dart';
@@ -14,6 +16,25 @@ class _HomePageState extends State<HomePage> {
   List<String> titleList = ['Amazon', '楽天', 'Yahoo!'];
   List<String> idList = ['Amazon', '楽天', 'Yahoo!'];
   List<String> pwList = ['Amazon', '楽天', 'Yahoo!'];
+
+  List<SaveData> list = [];
+
+  Future<void> setDb() async{
+    await DBProvider.setDb();
+    list = await DBProvider.getSaveData();
+
+    setState(() {
+
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    setDb();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +56,7 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.blue,
                           caption: 'ID',
                           onTap: () {
-                            Copy.idCopy(idList[i]);
+                            Copy.idCopy(list[i].passId);
                             Scaffold.of(context).showSnackBar(
                                 SnackBar(content: Text('IDをコピーしました'), duration: Duration(seconds: 1),)
                             );
@@ -48,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.blue,
                           caption: 'PW',
                           onTap: () {
-                            Copy.pwCopy(pwList[i]);
+                            Copy.pwCopy(list[i].passPW);
                             Scaffold.of(context).showSnackBar(
                                 SnackBar(content: Text('パスワードをコピーしました'), duration: Duration(seconds: 1),)
                             );
@@ -56,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                       child: ListTile(
-                        title: Text(titleList[i]),
+                        title: Text(list[i].title),
                         leading: Icon(Icons.vpn_key),
                         onTap: () {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmPass(i, titleList, idList, pwList)));
@@ -67,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 );
               },
-              itemCount: titleList.length,
+              itemCount: list.length,
             );
           }
       ),

@@ -24,8 +24,6 @@ class _AddPasswordState extends State<AddPassword> {
     widget.idList.add(idController.text);
     widget.pwList.add(pwController.text);
     Navigator.pop(context);
-    print('id: ${widget.idList}');
-    print('pw: ${widget.pwList}');
   }
 
   @override

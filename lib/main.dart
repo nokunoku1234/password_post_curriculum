@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:starter_course/db.dart';
 import 'package:starter_course/home_page.dart';
 import 'package:starter_course/setting.dart';
 
@@ -63,7 +64,6 @@ class _MainState extends State<Main> {
   }
 }
 
-//todo ボトムナビゲーションの追加
-//todo ダイアログ表示
+//todo DB作成
 
 
