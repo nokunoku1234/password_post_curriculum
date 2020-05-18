@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:starter_course/edit_page.dart';
+import 'package:starter_course/pages/edit_page.dart';
 
 class ConfirmPass extends StatefulWidget {
 

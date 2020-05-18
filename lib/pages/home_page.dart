@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:starter_course/db.dart';
-import 'package:starter_course/model.dart';
+import 'package:starter_course/utils/db.dart';
+import 'package:starter_course/model/model.dart';
 import 'add_password.dart';
 import 'confirm_pass.dart';
-import 'method.dart';
+import '../utils/method.dart';
 
 class HomePage extends StatefulWidget {
   @override
