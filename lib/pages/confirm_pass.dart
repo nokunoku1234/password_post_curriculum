@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:starter_course/model/model.dart';
 import 'package:starter_course/pages/edit_page.dart';
+import 'package:starter_course/utils/db_provider.dart';
 
 class ConfirmPass extends StatefulWidget {
 
-  final int i;
-  final List<String> titleList;
-  final List<String> idList;
-  final List<String> pwList;
-  ConfirmPass(this.i, this.titleList, this.idList, this.pwList);
+  final SaveData saveData;
+  ConfirmPass(this.saveData);
 
   @override
   _ConfirmPassState createState() => _ConfirmPassState();
@@ -16,22 +15,20 @@ class ConfirmPass extends StatefulWidget {
 
 class _ConfirmPassState extends State<ConfirmPass> {
 
-  void deleteList() {
-    widget.titleList.removeAt(widget.i);
-    widget.idList.removeAt(widget.i);
-    widget.pwList.removeAt(widget.i);
+  Future<void> deleteList() async{
+    await DBProvider.deleteSaveData(widget.saveData.id);
     Navigator.pop(context);
   }
 
 
 
   void iDClipboardCopy() async{
-    var idData = ClipboardData(text: widget.idList[widget.i]);
+    var idData = ClipboardData(text: widget.saveData.passId);
     await Clipboard.setData(idData);
   }
 
   void pwClipboardCopy() async{
-    var pwData = ClipboardData(text: widget.pwList[widget.i]);
+    var pwData = ClipboardData(text: widget.saveData.passPW);
     await Clipboard.setData(pwData);
   }
 
@@ -39,12 +36,12 @@ class _ConfirmPassState extends State<ConfirmPass> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.titleList[widget.i]),
+        title: Text(widget.saveData.title),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.edit),
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => EditPage(widget.i, widget.titleList, widget.idList, widget.pwList)));
+            onPressed: () async{
+              await Navigator.push(context, MaterialPageRoute(builder: (context) => EditPage(widget.saveData)));
             }
           )
         ],

@@ -13,15 +13,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  List<String> titleList = ['Amazon', '楽天', 'Yahoo!'];
-  List<String> idList = ['Amazon', '楽天', 'Yahoo!'];
-  List<String> pwList = ['Amazon', '楽天', 'Yahoo!'];
-
-  List<SaveData> list = [];
+  List<SaveData> pwList = [];
 
   Future<void> setDb() async{
     await DBProvider.setDb();
-    list = await DBProvider.getSaveData();
+    pwList = await DBProvider.getSaveData();
 
     setState(() {
 
@@ -45,9 +41,7 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.delete),
             onPressed: () async{
               await DBProvider.deleteAll();
-              setState(() {
-
-              });
+              setDb();
             },
           )
         ],
@@ -67,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.blue,
                           caption: 'ID',
                           onTap: () {
-                            Copy.idCopy(list[i].passId);
+                            Copy.idCopy(pwList[i].passId);
                             Scaffold.of(context).showSnackBar(
                                 SnackBar(content: Text('IDをコピーしました'), duration: Duration(seconds: 1),)
                             );
@@ -80,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.blue,
                           caption: 'PW',
                           onTap: () {
-                            Copy.pwCopy(list[i].passPW);
+                            Copy.pwCopy(pwList[i].passPW);
                             Scaffold.of(context).showSnackBar(
                                 SnackBar(content: Text('パスワードをコピーしました'), duration: Duration(seconds: 1),)
                             );
@@ -88,10 +82,10 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                       child: ListTile(
-                        title: Text(list[i].title),
+                        title: Text(pwList[i].title),
                         leading: Icon(Icons.vpn_key),
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmPass(i, titleList, idList, pwList)));
+                          pushConfirmPage(i);
                         },
                       ),
                     ),
@@ -99,18 +93,29 @@ class _HomePageState extends State<HomePage> {
                   ],
                 );
               },
-              itemCount: list.length,
+              itemCount: pwList.length,
             );
           }
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async{
-          await Navigator.push(context, MaterialPageRoute(builder: (context) => AddPassword(titleList, idList, pwList)));
+          await Navigator.push(context, MaterialPageRoute(builder: (context) => AddPassword()));
           setDb();
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
     );
+  }
+
+  Future<void> pushConfirmPage(int i) async{
+    SaveData _saveData = SaveData(
+      id: pwList[i].id,
+      title: pwList[i].title,
+      passId: pwList[i].passId,
+      passPW: pwList[i].passPW,
+    );
+    await Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmPass(_saveData)));
+    setDb();
   }
 }

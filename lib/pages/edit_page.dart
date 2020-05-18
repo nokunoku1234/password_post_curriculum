@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:starter_course/model/model.dart';
+import 'package:starter_course/utils/db_provider.dart';
 
 class EditPage extends StatefulWidget {
 
-  final int i;
-  final List<String> titleList;
-  final List<String> idList;
-  final List<String> pwList;
+  final SaveData saveData;
 
-  EditPage(this.i, this.titleList, this.idList, this.pwList);
+  EditPage(this.saveData);
 
   @override
   _EditPageState createState() => _EditPageState();
@@ -19,14 +18,17 @@ class _EditPageState extends State<EditPage> {
   TextEditingController idController = TextEditingController();
   TextEditingController pwController = TextEditingController();
 
-  void editPassword() {
-    widget.titleList[widget.i] = titleController.text;
-    widget.idList[widget.i] = idController.text;
-    widget.pwList[widget.i] = pwController.text;
-    Navigator.pop(context);
-
-    print('id: ${widget.idList}');
-    print('pw: ${widget.pwList}');
+  void editPassword() async{
+    SaveData _saveData = SaveData(
+      title: titleController.text,
+      passId: idController.text,
+      passPW: pwController.text,
+      date: DateTime.now(),
+    );
+    await DBProvider.updateSaveData(_saveData, widget.saveData.id);
+    while(Navigator.canPop(context)) {
+      Navigator.of(context).pop();
+    }
   }
 
   @override

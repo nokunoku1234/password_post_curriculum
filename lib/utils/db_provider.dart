@@ -58,10 +58,10 @@ class DBProvider {
   //update文
   static Future<void> updateSaveData(SaveData saveData, int id) async {
     await database.update(
-      'digiboard',
+      'password_post',
       {
         'title' : saveData.title,
-        'pasa_id' : saveData.passId,
+        'pass_id' : saveData.passId,
         'pass_pw': saveData.passPW,
         'date' : DateFormat('yyyy-MM-dd HH:mm:ss').format(saveData.date)
       },
@@ -74,7 +74,7 @@ class DBProvider {
   //delete文
   static Future<void> deleteSaveData(int id) async {
     await database.delete(
-      'digiboard',
+      'password_post',
       where: "id = ?",
       whereArgs: [id],
     );

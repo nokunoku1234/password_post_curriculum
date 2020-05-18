@@ -4,11 +4,6 @@ import 'package:starter_course/utils/db_provider.dart';
 
 class AddPassword extends StatefulWidget {
 
-  final List<String> titleList;
-  final List<String> idList;
-  final List<String> pwList;
-  AddPassword(this.titleList, this.idList, this.pwList);
-
   @override
   _AddPasswordState createState() => _AddPasswordState();
 }
@@ -21,10 +16,14 @@ class _AddPasswordState extends State<AddPassword> {
 
   bool _showPassword = false;
 
-  void addPassword() {
-    widget.titleList.add(titleController.text);
-    widget.idList.add(idController.text);
-    widget.pwList.add(pwController.text);
+  void addPassword() async{
+    SaveData _saveData = SaveData(
+        title: titleController.text,
+        passId: idController.text,
+        passPW: pwController.text,
+        date: DateTime.now()
+    );
+    await DBProvider.insertSaveData(_saveData);
     Navigator.pop(context);
   }
 
@@ -113,15 +112,8 @@ class _AddPasswordState extends State<AddPassword> {
                   borderRadius: BorderRadius.all(Radius.circular(5.0))
                 ),
                 color: Colors.blue,
-                onPressed: () async{
-                  SaveData _saveData = SaveData(
-                    title: titleController.text,
-                    passId: idController.text,
-                    passPW: pwController.text,
-                    date: DateTime.now()
-                  );
-                  await DBProvider.insertSaveData(_saveData);
-                  Navigator.pop(context);
+                onPressed: () {
+                  addPassword();
                 },
                 child: Text('追加', style: TextStyle(color: Colors.white),),
               ),
