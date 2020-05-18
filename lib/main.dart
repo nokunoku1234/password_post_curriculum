@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:starter_course/utils/db.dart';
+import 'package:starter_course/utils/db_provider.dart';
 import 'package:starter_course/pages/home_page.dart';
 import 'package:starter_course/pages/setting.dart';
 

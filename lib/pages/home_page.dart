@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:starter_course/utils/db.dart';
+import 'package:starter_course/utils/db_provider.dart';
 import 'package:starter_course/model/model.dart';
 import 'add_password.dart';
 import 'confirm_pass.dart';
@@ -40,6 +40,17 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: () async{
+              await DBProvider.deleteAll();
+              setState(() {
+
+              });
+            },
+          )
+        ],
         title: Text('パスワード管理'),
       ),
       body: Builder(
@@ -93,8 +104,9 @@ class _HomePageState extends State<HomePage> {
           }
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => AddPassword(titleList, idList, pwList)));
+        onPressed: () async{
+          await Navigator.push(context, MaterialPageRoute(builder: (context) => AddPassword(titleList, idList, pwList)));
+          setDb();
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),

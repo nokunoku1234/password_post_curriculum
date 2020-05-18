@@ -1,7 +1,5 @@
-import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:starter_course/model/model.dart';
 
@@ -19,9 +17,7 @@ class DBProvider {
   }
 
   static Future<Database> initDb() async{
-    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-
-    String path = join(documentsDirectory.path, "password_post.db");
+    String path = join(await getDatabasesPath(), "password_post.db");
 
     return await openDatabase(path, version: 1, onCreate: _createTable);
   }

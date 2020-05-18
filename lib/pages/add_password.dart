@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:starter_course/model/model.dart';
+import 'package:starter_course/utils/db_provider.dart';
 
 class AddPassword extends StatefulWidget {
 
@@ -111,8 +113,15 @@ class _AddPasswordState extends State<AddPassword> {
                   borderRadius: BorderRadius.all(Radius.circular(5.0))
                 ),
                 color: Colors.blue,
-                onPressed: () {
-                  addPassword();
+                onPressed: () async{
+                  SaveData _saveData = SaveData(
+                    title: titleController.text,
+                    passId: idController.text,
+                    passPW: pwController.text,
+                    date: DateTime.now()
+                  );
+                  await DBProvider.insertSaveData(_saveData);
+                  Navigator.pop(context);
                 },
                 child: Text('追加', style: TextStyle(color: Colors.white),),
               ),
