@@ -28,7 +28,7 @@ class _ConfirmPassState extends State<ConfirmPass> {
   }
 
   void pwClipboardCopy() async{
-    var pwData = ClipboardData(text: widget.saveData.passPW);
+    var pwData = ClipboardData(text: widget.saveData.passPw);
     await Clipboard.setData(pwData);
   }
 

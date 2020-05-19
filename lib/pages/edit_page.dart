@@ -22,7 +22,7 @@ class _EditPageState extends State<EditPage> {
     SaveData _saveData = SaveData(
       title: titleController.text,
       passId: idController.text,
-      passPW: pwController.text,
+      passPw: pwController.text,
       date: DateTime.now(),
     );
     await DBProvider.updateSaveData(_saveData, widget.saveData.id);

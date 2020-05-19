@@ -2,17 +2,17 @@ class SaveData {
   int id;
   String title;
   String passId;
-  String passPW;
+  String passPw;
   DateTime date;
 
-  SaveData({this.id, this.title, this.passId, this.passPW, this.date});
+  SaveData({this.id, this.title, this.passId, this.passPw, this.date});
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'title': title,
       'pass_id': passId,
-      'pass_pw': passPW,
+      'pass_pw': passPw,
       'date': date,
     };
   }

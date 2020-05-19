@@ -20,7 +20,7 @@ class _AddPasswordState extends State<AddPassword> {
     SaveData _saveData = SaveData(
         title: titleController.text,
         passId: idController.text,
-        passPW: pwController.text,
+        passPw: pwController.text,
         date: DateTime.now()
     );
     await DBProvider.insertSaveData(_saveData);

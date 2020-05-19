@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.blue,
                           caption: 'PW',
                           onTap: () {
-                            Copy.pwCopy(pwList[i].passPW);
+                            Copy.pwCopy(pwList[i].passPw);
                             Scaffold.of(context).showSnackBar(
                                 SnackBar(content: Text('パスワードをコピーしました'), duration: Duration(seconds: 1),)
                             );
@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
       id: pwList[i].id,
       title: pwList[i].title,
       passId: pwList[i].passId,
-      passPW: pwList[i].passPW,
+      passPw: pwList[i].passPw,
     );
     await Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmPass(_saveData)));
     setDb();

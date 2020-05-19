@@ -35,7 +35,7 @@ class DBProvider {
       {
         'title': saveData.title,
         'pass_id': saveData.passId,
-        'pass_pw': saveData.passPW,
+        'pass_pw': saveData.passPw,
         'date': DateFormat('yyyy-MM-dd HH:mm:ss').format(saveData.date)
       }
     );
@@ -49,7 +49,7 @@ class DBProvider {
         id: maps[i]['id'],
         title: maps[i]['title'],
         passId: maps[i]['pass_id'],
-        passPW: maps[i]['pass_pw'],
+        passPw: maps[i]['pass_pw'],
         date: DateTime.parse(maps[i]['date']),
       );
     });
@@ -62,7 +62,7 @@ class DBProvider {
       {
         'title' : saveData.title,
         'pass_id' : saveData.passId,
-        'pass_pw': saveData.passPW,
+        'pass_pw': saveData.passPw,
         'date' : DateFormat('yyyy-MM-dd HH:mm:ss').format(saveData.date)
       },
       where: "id = ?",
