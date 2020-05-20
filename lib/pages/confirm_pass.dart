@@ -6,7 +6,7 @@ import 'package:starter_course/utils/db_provider.dart';
 
 class ConfirmPass extends StatefulWidget {
 
-  final SaveData saveData;
+  final FileData saveData;
   ConfirmPass(this.saveData);
 
   @override
@@ -16,7 +16,7 @@ class ConfirmPass extends StatefulWidget {
 class _ConfirmPassState extends State<ConfirmPass> {
 
   Future<void> deleteList() async{
-    await DBProvider.deleteSaveData(widget.saveData.id);
+//    await DBProvider.deleteSaveData(widget.saveData.id);
     Navigator.pop(context);
   }
 

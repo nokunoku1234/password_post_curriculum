@@ -1,3 +1,4 @@
+
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -6,6 +7,11 @@ import 'package:starter_course/model/model.dart';
 class DBProvider {
 
   static Database database;
+
+  DBProvider._internal();
+
+  static final instance = DBProvider._internal();
+
 
   static Future<void> setDb() async{
     if(database == null) {
@@ -23,58 +29,58 @@ class DBProvider {
   }
 
   static Future<void> _createTable(Database db, int version) async {
-    return await db.execute(
-      "CREATE TABLE password_post(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, pass_id TEXT, pass_pw TEXT, date TEXT)",
-    );
+    await db.execute(FileData.sqlCreateTable);
+    await db.execute(FolderData.sqlCreateTable);
   }
 
   //insert文
-  static Future<void> insertSaveData(SaveData saveData) async{
+  static Future<void> insertSaveData({String tableName, bool isFile, FileData fileData, FolderData folderData}) async{
     await database.insert(
-      'password_post',
-      {
-        'title': saveData.title,
-        'pass_id': saveData.passId,
-        'pass_pw': saveData.passPw,
-        'date': DateFormat('yyyy-MM-dd HH:mm:ss').format(saveData.date)
-      }
-    );
+      tableName, isFile ? fileData.toMap() : folderData.toMap());
   }
 
   //select文
-  static Future<List<SaveData>> getSaveData() async{
-    final List<Map<String, dynamic>> maps = await database.query('password_post');
+  static Future<List<FileData>> getFileData() async{
+    var maps = await database.query('file');
     return List.generate(maps.length, (i){
-      return SaveData(
+      return FileData(
         id: maps[i]['id'],
         title: maps[i]['title'],
         passId: maps[i]['pass_id'],
         passPw: maps[i]['pass_pw'],
+        parent: maps[i]['parent'],
+        date: DateTime.parse(maps[i]['date']),
+      );
+    });
+  }
+
+  static Future<List<FolderData>> getFolderData() async{
+    var maps = await database.query('folder');
+    return List.generate(maps.length, (i){
+      return FolderData(
+        id: maps[i]['id'],
+        title: maps[i]['title'],
+        parent: maps[i]['parent'],
         date: DateTime.parse(maps[i]['date']),
       );
     });
   }
 
   //update文
-  static Future<void> updateSaveData(SaveData saveData, int id) async {
+  static Future<void> updateSaveData(String tableName, bool isFile, {FileData fileData, FolderData folderData}) async {
     await database.update(
-      'password_post',
-      {
-        'title' : saveData.title,
-        'pass_id' : saveData.passId,
-        'pass_pw': saveData.passPw,
-        'date' : DateFormat('yyyy-MM-dd HH:mm:ss').format(saveData.date)
-      },
+      tableName,
+      isFile ? fileData.toMap() : folderData.toMap(),
       where: "id = ?",
-      whereArgs: [id],
+      whereArgs: isFile ? [fileData.id] : [folderData.id],
       conflictAlgorithm: ConflictAlgorithm.fail,
     );
   }
 
   //delete文
-  static Future<void> deleteSaveData(int id) async {
+  static Future<void> deleteSaveData(String tableName, int id) async {
     await database.delete(
-      'password_post',
+      tableName,
       where: "id = ?",
       whereArgs: [id],
     );
@@ -82,7 +88,20 @@ class DBProvider {
 
   //DBの削除
   static Future<void> deleteAll() async {
-    await database.delete('password_post');
+    await database.delete('file');
+    await database.delete('folder');
+
+  }
+
+  initializeDatabase() async {
+    if (null != database) return;
+
+    database = await openDatabase(
+      join(await getDatabasesPath(), "password_post.db"),
+      version: 1,
+      onCreate: _createTable
+
+    );
   }
 
 }

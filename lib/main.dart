@@ -30,28 +30,18 @@ class Main extends StatefulWidget {
 class _MainState extends State<Main> {
 
   int _selectedIndex = 0;
-  PageController _pageController = PageController();
 
   void _onItemTapped(int index) {
-    _pageController.animateToPage(index, duration: Duration(milliseconds: 1), curve: Curves.ease);
+    _selectedIndex = index;
+    setState(() {
+
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        onPageChanged: (int index) {
-          _selectedIndex = index;
-          setState(() {
-
-          });
-        },
-        controller: _pageController,
-        children: <Widget>[
-          HomePage(),
-          Setting()
-        ],
-      ),
+      body: _selectedIndex == 0 ? HomePage() : Setting(),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem> [
           BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('ホーム')),

@@ -6,18 +6,28 @@ import 'add_password.dart';
 import 'confirm_pass.dart';
 import '../utils/method.dart';
 
+List<int> stageList = [0];
+
 class HomePage extends StatefulWidget {
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
 
-  List<SaveData> pwList = [];
+  List<FileData> fileList = [];
+  List<FolderData> folderList = [];
+  Widget _widget;
 
   Future<void> setDb() async{
+    final dbProvider = DBProvider.instance;
+    await dbProvider.initializeDatabase();
+
+
     await DBProvider.setDb();
-    pwList = await DBProvider.getSaveData();
+    fileList = await DBProvider.getFileData();
+    folderList = await DBProvider.getFolderData();
 
     setState(() {
 
@@ -36,7 +46,21 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: (stageList[stageList.length - 1] == 0) ? Container() : IconButton(
+          icon: Icon(Icons.navigate_before),
+          onPressed: () {
+            stageList.removeLast();
+            Navigator.pop(context);
+          },
+        ),
         actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.folder),
+            onPressed: () async{
+              await Navigator.push(context, MaterialPageRoute(builder: (context) => AddPassword('フォルダー追加', false)));
+              setDb();
+            }
+          ),
           IconButton(
             icon: Icon(Icons.delete),
             onPressed: () async{
@@ -47,59 +71,90 @@ class _HomePageState extends State<HomePage> {
         ],
         title: Text('パスワード管理'),
       ),
-      body: Builder(
-          builder: (BuildContext context) {
-            return ListView.builder(
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: ListView.builder(
               itemBuilder: (BuildContext context, int i) {
-                return Column(
-                  children: <Widget>[
-                    Slidable(
-                      actionPane: SlidableDrawerActionPane(),
-                      actions: <Widget>[
-                        IconSlideAction(
-                          icon: Icons.content_copy,
-                          color: Colors.blue,
-                          caption: 'ID',
+
+                if(i < folderList.length) {
+//                        print(folderList[i].parent);
+//                        print(fileList[i].parent);
+                  if (stageList[stageList.length - 1] == folderList[i].parent) {
+                    _widget = Column(
+                      children: <Widget>[
+                        ListTile(
+                          leading: Icon(Icons.folder),
+                          title: Text(folderList[i].title),
                           onTap: () {
-                            Copy.idCopy(pwList[i].passId);
-                            Scaffold.of(context).showSnackBar(
-                                SnackBar(content: Text('IDをコピーしました'), duration: Duration(seconds: 1),)
-                            );
+                            stageList.add(folderList[i].id);
+                            print(stageList);
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
                           },
                         ),
+                        Divider(height: 0.0,),
                       ],
-                      secondaryActions: <Widget>[
-                        IconSlideAction(
-                          icon: Icons.content_copy,
-                          color: Colors.blue,
-                          caption: 'PW',
-                          onTap: () {
-                            Copy.pwCopy(pwList[i].passPw);
-                            Scaffold.of(context).showSnackBar(
-                                SnackBar(content: Text('パスワードをコピーしました'), duration: Duration(seconds: 1),)
-                            );
-                          },
+                    );
+                  } else {
+                    _widget = Container();
+                  }
+                } else {
+                  if(stageList[stageList.length - 1] == fileList[i - folderList.length].parent) {
+                    _widget = Column(
+                      children: <Widget>[
+                        Slidable(
+                          actionPane: SlidableDrawerActionPane(),
+                          actions: <Widget>[
+                            IconSlideAction(
+                              icon: Icons.content_copy,
+                              color: Colors.blue,
+                              caption: 'ID',
+                              onTap: () {
+                                Copy.idCopy(fileList[i - folderList.length].passId);
+                                Scaffold.of(context).showSnackBar(
+                                    SnackBar(content: Text('IDをコピーしました'), duration: Duration(seconds: 1),)
+                                );
+                              },
+                            ),
+                          ],
+                          secondaryActions: <Widget>[
+                            IconSlideAction(
+                              icon: Icons.content_copy,
+                              color: Colors.blue,
+                              caption: 'PW',
+                              onTap: () {
+                                Copy.pwCopy(fileList[i - folderList.length].passPw);
+                                Scaffold.of(context).showSnackBar(
+                                    SnackBar(content: Text('パスワードをコピーしました'), duration: Duration(seconds: 1),)
+                                );
+                              },
+                            ),
+                          ],
+                          child: ListTile(
+                            title: Text(fileList[i - folderList.length].title),
+                            leading: Icon(Icons.vpn_key),
+                            onTap: () {
+                              pushConfirmPage(i);
+                            },
+                          ),
                         ),
+                        Divider(height: 0.0,),
                       ],
-                      child: ListTile(
-                        title: Text(pwList[i].title),
-                        leading: Icon(Icons.vpn_key),
-                        onTap: () {
-                          pushConfirmPage(i);
-                        },
-                      ),
-                    ),
-                    Divider(height: 0.0,),
-                  ],
-                );
+                    );
+                  } else {
+                    _widget = Container();
+                  }
+                }
+                return _widget;
               },
-              itemCount: pwList.length,
-            );
-          }
+              itemCount: fileList.length + folderList.length,
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async{
-          await Navigator.push(context, MaterialPageRoute(builder: (context) => AddPassword()));
+          await Navigator.push(context, MaterialPageRoute(builder: (context) => AddPassword('パスワード追加', true)));
           setDb();
         },
         tooltip: 'Increment',
@@ -109,11 +164,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> pushConfirmPage(int i) async{
-    SaveData _saveData = SaveData(
-      id: pwList[i].id,
-      title: pwList[i].title,
-      passId: pwList[i].passId,
-      passPw: pwList[i].passPw,
+    FileData _saveData = FileData(
+      id: fileList[i].id,
+      title: fileList[i].title,
+      passId: fileList[i].passId,
+      passPw: fileList[i].passPw,
     );
     await Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmPass(_saveData)));
     setDb();

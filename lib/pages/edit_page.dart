@@ -4,7 +4,7 @@ import 'package:starter_course/utils/db_provider.dart';
 
 class EditPage extends StatefulWidget {
 
-  final SaveData saveData;
+  final FileData saveData;
 
   EditPage(this.saveData);
 
@@ -19,13 +19,13 @@ class _EditPageState extends State<EditPage> {
   TextEditingController pwController = TextEditingController();
 
   void editPassword() async{
-    SaveData _saveData = SaveData(
+    FileData _saveData = FileData(
       title: titleController.text,
       passId: idController.text,
       passPw: pwController.text,
       date: DateTime.now(),
     );
-    await DBProvider.updateSaveData(_saveData, widget.saveData.id);
+//    await DBProvider.updateSaveData(_saveData, widget.saveData.id);
     while(Navigator.canPop(context)) {
       Navigator.of(context).pop();
     }
