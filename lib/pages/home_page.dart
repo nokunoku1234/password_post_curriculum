@@ -77,9 +77,9 @@ class _HomePageState extends State<HomePage> {
             child: ListView.builder(
               itemBuilder: (BuildContext context, int i) {
 
+                //フォルダ表示に関する記述 → フォルダがあればifの内容を実施。
                 if(i < folderList.length) {
-//                        print(folderList[i].parent);
-//                        print(fileList[i].parent);
+                  //任意の階層に表示できるよう記述 → stageListが今いる階層。そこにfolderListのparentが一致するやつだけを表示。
                   if (stageList[stageList.length - 1] == folderList[i].parent) {
                     _widget = Column(
                       children: <Widget>[
@@ -87,6 +87,7 @@ class _HomePageState extends State<HomePage> {
                           leading: Icon(Icons.folder),
                           title: Text(folderList[i].title),
                           onTap: () {
+                            //一つ下の階層に移動。
                             stageList.add(folderList[i].id);
                             print(stageList);
                             Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
@@ -96,9 +97,12 @@ class _HomePageState extends State<HomePage> {
                       ],
                     );
                   } else {
+                    //parentが一致しないときには何も表示しない → 新しい階層に行った際のクリーンなページを表示。
                     _widget = Container();
                   }
+                  //ファイル表示に関する記述 → フォルダを表示し切ったらファイルを表示。
                 } else {
+                  //任意の階層に表示できるよう記述 → ファイル表示はフォルダー表示を終えた後に行う。従って[i - folderList.length]によってfileを適切に取り出す。
                   if(stageList[stageList.length - 1] == fileList[i - folderList.length].parent) {
                     _widget = Column(
                       children: <Widget>[
