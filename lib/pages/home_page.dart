@@ -138,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                             title: Text(fileList[i - folderList.length].title),
                             leading: Icon(Icons.vpn_key),
                             onTap: () {
-                              pushConfirmPage(i);
+                              pushConfirmPage(i - folderList.length);
                             },
                           ),
                         ),
@@ -167,14 +167,16 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Future<void> pushConfirmPage(int i) async{
-    FileData _saveData = FileData(
-      id: fileList[i].id,
-      title: fileList[i].title,
-      passId: fileList[i].passId,
-      passPw: fileList[i].passPw,
+  Future<void> pushConfirmPage(int index) async{
+    FileData _fileData = FileData(
+      id: fileList[index].id,
+      title: fileList[index].title,
+      passId: fileList[index].passId,
+      passPw: fileList[index].passPw,
+      parent: fileList[index].parent,
+      date: fileList[index].date
     );
-    await Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmPass(_saveData)));
+    await Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmPass(_fileData)));
     setDb();
   }
 }

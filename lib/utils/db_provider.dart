@@ -67,7 +67,7 @@ class DBProvider {
   }
 
   //update文
-  static Future<void> updateSaveData(String tableName, bool isFile, {FileData fileData, FolderData folderData}) async {
+  static Future<void> updateSaveData({String tableName, bool isFile, FileData fileData, FolderData folderData}) async {
     await database.update(
       tableName,
       isFile ? fileData.toMap() : folderData.toMap(),
@@ -78,7 +78,7 @@ class DBProvider {
   }
 
   //delete文
-  static Future<void> deleteSaveData(String tableName, int id) async {
+  static Future<void> deleteSaveData({String tableName, int id}) async {
     await database.delete(
       tableName,
       where: "id = ?",

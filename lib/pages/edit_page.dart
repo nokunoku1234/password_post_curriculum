@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:starter_course/model/model.dart';
+import 'package:starter_course/pages/home_page.dart';
 import 'package:starter_course/utils/db_provider.dart';
 
 class EditPage extends StatefulWidget {
 
   final FileData saveData;
-
   EditPage(this.saveData);
 
   @override
@@ -19,14 +19,17 @@ class _EditPageState extends State<EditPage> {
   TextEditingController pwController = TextEditingController();
 
   void editPassword() async{
-    FileData _saveData = FileData(
+    FileData _fileData = FileData(
+      id: widget.saveData.id,
       title: titleController.text,
       passId: idController.text,
       passPw: pwController.text,
+      parent: stageList[stageList.length - 1],
       date: DateTime.now(),
     );
-//    await DBProvider.updateSaveData(_saveData, widget.saveData.id);
+    await DBProvider.updateSaveData(tableName: 'file', isFile: true, fileData: _fileData);
     while(Navigator.canPop(context)) {
+      stageList = [0];
       Navigator.of(context).pop();
     }
   }

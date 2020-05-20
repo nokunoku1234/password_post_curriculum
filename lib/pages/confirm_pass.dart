@@ -16,11 +16,9 @@ class ConfirmPass extends StatefulWidget {
 class _ConfirmPassState extends State<ConfirmPass> {
 
   Future<void> deleteList() async{
-//    await DBProvider.deleteSaveData(widget.saveData.id);
+    await DBProvider.deleteSaveData(tableName: 'file', id :widget.saveData.id);
     Navigator.pop(context);
   }
-
-
 
   void iDClipboardCopy() async{
     var idData = ClipboardData(text: widget.saveData.passId);
