@@ -10,6 +10,9 @@ List<int> stageList = [0];
 
 class HomePage extends StatefulWidget {
 
+  final String title;
+  HomePage(this.title);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -46,6 +49,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         leading: (stageList[stageList.length - 1] == 0) ? Container() : IconButton(
           icon: Icon(Icons.navigate_before),
           onPressed: () {
@@ -69,7 +73,7 @@ class _HomePageState extends State<HomePage> {
             },
           )
         ],
-        title: Text('パスワード管理'),
+        title: Text(widget.title),
       ),
       body: Column(
         children: <Widget>[
@@ -90,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                             //一つ下の階層に移動。
                             stageList.add(folderList[i].id);
                             print(stageList);
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(folderList[i].title)));
                           },
                         ),
                         Divider(height: 0.0,),

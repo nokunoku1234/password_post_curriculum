@@ -41,7 +41,7 @@ class _MainState extends State<Main> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _selectedIndex == 0 ? HomePage() : Setting(),
+      body: _selectedIndex == 0 ? HomePage('パスワード管理') : Setting(),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem> [
           BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('ホーム')),
