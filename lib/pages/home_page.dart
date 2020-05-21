@@ -24,10 +24,6 @@ class _HomePageState extends State<HomePage> {
   Widget _widget;
 
   Future<void> setDb() async{
-    final dbProvider = DBProvider.instance;
-    await dbProvider.initializeDatabase();
-
-
     await DBProvider.setDb();
     fileList = await DBProvider.getFileData();
     folderList = await DBProvider.getFolderData();

@@ -22,10 +22,25 @@ class DBProvider {
     }
   }
 
+  static Map<String, String> createTableList = {
+    '2' : FileData.sqlCreateTable,
+    '3' : FolderData.sqlCreateTable,
+  };
+
   static Future<Database> initDb() async{
     String path = join(await getDatabasesPath(), "password_post.db");
 
-    return await openDatabase(path, version: 1, onCreate: _createTable);
+    return await openDatabase(
+      path,
+      version: 1,
+      onCreate: _createTable,
+      onUpgrade: (Database db, int oldVersion, int newVersion) async{
+        for(int i = oldVersion + 1; i <= newVersion; i++) {
+          var query = createTableList[i.toString()];
+          await db.execute(query);
+        }
+      },
+    );
   }
 
   static Future<void> _createTable(Database db, int version) async {
@@ -91,17 +106,6 @@ class DBProvider {
     await database.delete('file');
     await database.delete('folder');
 
-  }
-
-  initializeDatabase() async {
-    if (null != database) return;
-
-    database = await openDatabase(
-      join(await getDatabasesPath(), "password_post.db"),
-      version: 1,
-      onCreate: _createTable
-
-    );
   }
 
 }
