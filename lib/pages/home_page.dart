@@ -54,13 +54,14 @@ class _HomePageState extends State<HomePage> {
           },
         ),
         actions: <Widget>[
+          (stageList.length < 5) ?
           IconButton(
             icon: Icon(Icons.folder),
             onPressed: () async{
               await Navigator.push(context, MaterialPageRoute(builder: (context) => AddPassword('フォルダー追加', false)));
               setDb();
             }
-          ),
+          ) : Container(),
           IconButton(
             icon: Icon(Icons.delete),
             onPressed: () async{

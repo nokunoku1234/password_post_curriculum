@@ -22,9 +22,9 @@ class DBProvider {
     }
   }
 
-  static Map<String, String> createTableList = {
-    '2' : FileData.sqlCreateTable,
-    '3' : FolderData.sqlCreateTable,
+  static Map<int, String> createTableList = {
+    2 : FileData.sqlCreateTable,
+    3 : FolderData.sqlCreateTable,
   };
 
   static Future<Database> initDb() async{
@@ -32,11 +32,11 @@ class DBProvider {
 
     return await openDatabase(
       path,
-      version: 1,
+      version: 3,
       onCreate: _createTable,
       onUpgrade: (Database db, int oldVersion, int newVersion) async{
         for(int i = oldVersion + 1; i <= newVersion; i++) {
-          var query = createTableList[i.toString()];
+          var query = createTableList[i];
           await db.execute(query);
         }
       },
