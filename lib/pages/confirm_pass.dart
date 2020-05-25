@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:starter_course/model/model.dart';
@@ -18,6 +19,7 @@ class _ConfirmPassState extends State<ConfirmPass> {
   Future<void> deleteList() async{
     await DBProvider.deleteSaveData(tableName: 'file', id :widget.saveData.id);
     Navigator.pop(context);
+    Navigator.pop(context);
   }
 
   void iDClipboardCopy() async{
@@ -29,6 +31,8 @@ class _ConfirmPassState extends State<ConfirmPass> {
     var pwData = ClipboardData(text: widget.saveData.passPw);
     await Clipboard.setData(pwData);
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +96,28 @@ class _ConfirmPassState extends State<ConfirmPass> {
                       color: Colors.red,
                       child: Text('削除', style: TextStyle(color: Colors.white),),
                       onPressed: () {
-                        deleteList();
+                        showCupertinoModalPopup(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CupertinoAlertDialog(
+                              title: Text('削除しますか？'),
+                              content: Text('削除すると復元できません。'),
+                              actions: <Widget>[
+                                CupertinoActionSheetAction(
+                                  child: Text('キャンセル'),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    print('==================キャンセルしました');
+                                  },
+                                ),
+                                CupertinoActionSheetAction(
+                                  child: Text('削除'),
+                                  onPressed: deleteList,
+                                ),
+                              ],
+                            );
+                          }
+                        );
                       },
                     ),
                   ),
