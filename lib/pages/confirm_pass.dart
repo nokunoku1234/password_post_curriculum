@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:starter_course/model/model.dart';
 import 'package:starter_course/pages/edit_page.dart';
 import 'package:starter_course/utils/db_provider.dart';
@@ -22,18 +21,6 @@ class _ConfirmPassState extends State<ConfirmPass> {
     Navigator.pop(context);
     Navigator.pop(context);
   }
-
-  void iDClipboardCopy() async{
-    var idData = ClipboardData(text: widget.fileData.passId);
-    await Clipboard.setData(idData);
-  }
-
-  void pwClipboardCopy() async{
-    var pwData = ClipboardData(text: widget.fileData.passPw);
-    await Clipboard.setData(pwData);
-  }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +50,7 @@ class _ConfirmPassState extends State<ConfirmPass> {
                       borderSide: BorderSide(color: Colors.black),
                       shape: StadiumBorder(),
                       onPressed: () {
-                        iDClipboardCopy();
+                        Method.idCopy(widget.fileData.passId);
                         Scaffold.of(context).showSnackBar(
                             SnackBar(content: Text('IDをコピー'), duration: Duration(seconds: 1),)
                         );
@@ -80,7 +67,7 @@ class _ConfirmPassState extends State<ConfirmPass> {
                       borderSide: BorderSide(color: Colors.black),
                       shape: StadiumBorder(),
                       onPressed: () {
-                        pwClipboardCopy();
+                        Method.pwCopy(widget.fileData.passPw);
                         Scaffold.of(context).showSnackBar(
                             SnackBar(content: Text('PWをコピー'), duration: Duration(seconds: 1),)
                         );
