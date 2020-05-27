@@ -19,16 +19,23 @@ class _EditPageState extends State<EditPage> {
   TextEditingController idController = TextEditingController();
   TextEditingController pwController = TextEditingController();
 
-  void editPassword() async{
-    FileData _fileData = FileData(
-      id: widget.fileData.id,
+  void editFile({FileData fileData, FolderData folderData}) async{
+    (fileData != null) ?
+      fileData = FileData(
+        id: widget.fileData.id,
+        title: titleController.text,
+        passId: idController.text,
+        passPw: pwController.text,
+        parent: stageList[stageList.length - 1],
+        date: DateTime.now(),
+      )
+    : folderData = FolderData(
+      id: widget.folderData.id,
       title: titleController.text,
-      passId: idController.text,
-      passPw: pwController.text,
       parent: stageList[stageList.length - 1],
       date: DateTime.now(),
     );
-    await DBProvider.updateSaveData(tableName: 'file', isFile: true, fileData: _fileData);
+    await DBProvider.updateSaveData(tableName: (fileData != null) ? 'file' : 'folder', fileData: fileData, folderData: folderData);
     while(Navigator.canPop(context)) {
       stageList = [0];
       Navigator.of(context).pop();
@@ -60,43 +67,49 @@ class _EditPageState extends State<EditPage> {
                 ),
               ],
             ),
-            Padding(padding: EdgeInsets.all(10.0),),
-            Row(
-              children: <Widget>[
-                Container(
-                  width: 100,
-                  child: Text('ID'),
-                ),
-                Expanded(
-                  child: TextField(
-                    controller: idController,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'ID'
+            (widget.fileData != null) ?
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 100,
+                    child: Text('ID'),
+                  ),
+                  Expanded(
+                    child: TextField(
+                      controller: idController,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'ID'
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Padding(padding: EdgeInsets.all(10.0),),
-            Row(
-              children: <Widget>[
-                Container(
-                  width: 100,
-                  child: Text('パスワード'),
-                ),
-                Expanded(
-                  child: TextField(
-                    controller: pwController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'パスワード'
+                ],
+              ),
+            ) : Container(),
+            (widget.fileData != null) ?
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 100,
+                    child: Text('パスワード'),
+                  ),
+                  Expanded(
+                    child: TextField(
+                      controller: pwController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'パスワード'
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+            ) : Container(),
             Padding(padding: EdgeInsets.all(20.0),
             ),
             Container(
@@ -107,7 +120,7 @@ class _EditPageState extends State<EditPage> {
                 ),
                 color: Colors.blue,
                 onPressed: () {
-                  editPassword();
+                  editFile(fileData: widget.fileData, folderData: widget.folderData);
                 },
                 child: Text('修正', style: TextStyle(color: Colors.white),),
               ),

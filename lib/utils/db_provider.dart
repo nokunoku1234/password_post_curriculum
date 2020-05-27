@@ -82,12 +82,12 @@ class DBProvider {
   }
 
   //update文
-  static Future<void> updateSaveData({String tableName, bool isFile, FileData fileData, FolderData folderData}) async {
+  static Future<void> updateSaveData({String tableName, FileData fileData, FolderData folderData}) async {
     await database.update(
       tableName,
-      isFile ? fileData.toMap() : folderData.toMap(),
+      (fileData != null) ? fileData.toMap() : folderData.toMap(),
       where: "id = ?",
-      whereArgs: isFile ? [fileData.id] : [folderData.id],
+      whereArgs: (fileData != null) ? [fileData.id] : [folderData.id],
       conflictAlgorithm: ConflictAlgorithm.fail,
     );
   }

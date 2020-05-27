@@ -192,8 +192,10 @@ class _HomePageState extends State<HomePage> {
           ListTile(
             leading: Icon(Icons.edit),
             title: Text('編集'),
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => (folderData == null) ? EditPage(fileData: fileData) : EditPage(folderData: folderData)));
+            onTap: () async{
+              Navigator.pop(context);
+              await Navigator.push(context, MaterialPageRoute(builder: (context) => (folderData == null) ? EditPage(fileData: fileData) : EditPage(folderData: folderData)));
+              setDb();
             },
           ),
           Divider(height: 0.0,),
