@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:starter_course/pages/edit_page.dart';
 import 'package:starter_course/utils/db_provider.dart';
 import 'package:starter_course/model/model.dart';
 import 'add_password.dart';
@@ -85,6 +86,12 @@ class _HomePageState extends State<HomePage> {
                     _widget = Column(
                       children: <Widget>[
                         ListTile(
+                          trailing: IconButton(
+                            icon: Icon(Icons.more_vert),
+                            onPressed: (){
+                              buildShowModalBottomSheet(folderData: folderList[i]);
+                            },
+                          ),
                           leading: Icon(Icons.folder),
                           title: Text(folderList[i].title),
                           onTap: () {
@@ -115,7 +122,7 @@ class _HomePageState extends State<HomePage> {
                               color: Colors.blue,
                               caption: 'ID',
                               onTap: () {
-                                Copy.idCopy(fileList[i - folderList.length].passId);
+                                Method.idCopy(fileList[i - folderList.length].passId);
                                 Scaffold.of(context).showSnackBar(
                                     SnackBar(content: Text('IDをコピーしました'), duration: Duration(seconds: 1),)
                                 );
@@ -128,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                               color: Colors.blue,
                               caption: 'PW',
                               onTap: () {
-                                Copy.pwCopy(fileList[i - folderList.length].passPw);
+                                Method.pwCopy(fileList[i - folderList.length].passPw);
                                 Scaffold.of(context).showSnackBar(
                                     SnackBar(content: Text('パスワードをコピーしました'), duration: Duration(seconds: 1),)
                                 );
@@ -138,8 +145,16 @@ class _HomePageState extends State<HomePage> {
                           child: ListTile(
                             title: Text(fileList[i - folderList.length].title),
                             leading: Icon(Icons.vpn_key),
-                            onTap: () {
-                              pushConfirmPage(i - folderList.length);
+                            trailing: IconButton(
+                              icon: Icon(Icons.more_vert),
+                              onPressed: () async{
+                                await buildShowModalBottomSheet(fileData: fileList[i - folderList.length]);
+                                setDb();
+                              },
+                            ),
+                            onTap: () async{
+                              await Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmPass(fileList[i - folderList.length])));
+                              setDb();
                             },
                           ),
                         ),
@@ -168,16 +183,31 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Future<void> pushConfirmPage(int index) async{
-    FileData _fileData = FileData(
-      id: fileList[index].id,
-      title: fileList[index].title,
-      passId: fileList[index].passId,
-      passPw: fileList[index].passPw,
-      parent: fileList[index].parent,
-      date: fileList[index].date
-    );
-    await Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmPass(_fileData)));
-    setDb();
+  Future<void> buildShowModalBottomSheet({FileData fileData, FolderData folderData}) {
+    return showModalBottomSheet(
+        context: context, builder: (BuildContext context) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          ListTile(
+            leading: Icon(Icons.edit),
+            title: Text('編集'),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => (folderData == null) ? EditPage(fileData: fileData) : EditPage(folderData: folderData)));
+            },
+          ),
+          Divider(height: 0.0,),
+          ListTile(
+            leading: Icon(Icons.delete),
+            title: Text('削除'),
+            onTap: () async{
+              await Method.buildShowModalPopup(context, fileData: fileData, folderData: folderData);
+              setDb();
+            },
+          ),
+        ],
+      );
+    });
   }
+
 }

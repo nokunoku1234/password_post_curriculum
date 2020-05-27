@@ -4,11 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:starter_course/model/model.dart';
 import 'package:starter_course/pages/edit_page.dart';
 import 'package:starter_course/utils/db_provider.dart';
+import 'package:starter_course/utils/method.dart';
 
 class ConfirmPass extends StatefulWidget {
 
-  final FileData saveData;
-  ConfirmPass(this.saveData);
+  final FileData fileData;
+  ConfirmPass(this.fileData);
 
   @override
   _ConfirmPassState createState() => _ConfirmPassState();
@@ -17,18 +18,18 @@ class ConfirmPass extends StatefulWidget {
 class _ConfirmPassState extends State<ConfirmPass> {
 
   Future<void> deleteList() async{
-    await DBProvider.deleteSaveData(tableName: 'file', id :widget.saveData.id);
+    await DBProvider.deleteSaveData(tableName: 'file', id :widget.fileData.id);
     Navigator.pop(context);
     Navigator.pop(context);
   }
 
   void iDClipboardCopy() async{
-    var idData = ClipboardData(text: widget.saveData.passId);
+    var idData = ClipboardData(text: widget.fileData.passId);
     await Clipboard.setData(idData);
   }
 
   void pwClipboardCopy() async{
-    var pwData = ClipboardData(text: widget.saveData.passPw);
+    var pwData = ClipboardData(text: widget.fileData.passPw);
     await Clipboard.setData(pwData);
   }
 
@@ -38,12 +39,12 @@ class _ConfirmPassState extends State<ConfirmPass> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.saveData.title),
+        title: Text(widget.fileData.title),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.edit),
             onPressed: () async{
-              await Navigator.push(context, MaterialPageRoute(builder: (context) => EditPage(widget.saveData)));
+              await Navigator.push(context, MaterialPageRoute(builder: (context) => EditPage(fileData: widget.fileData)));
             }
           )
         ],
@@ -96,28 +97,7 @@ class _ConfirmPassState extends State<ConfirmPass> {
                       color: Colors.red,
                       child: Text('削除', style: TextStyle(color: Colors.white),),
                       onPressed: () {
-                        showCupertinoModalPopup(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return CupertinoAlertDialog(
-                              title: Text('削除しますか？'),
-                              content: Text('削除すると復元できません。'),
-                              actions: <Widget>[
-                                CupertinoActionSheetAction(
-                                  child: Text('キャンセル'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    print('==================キャンセルしました');
-                                  },
-                                ),
-                                CupertinoActionSheetAction(
-                                  child: Text('削除'),
-                                  onPressed: deleteList,
-                                ),
-                              ],
-                            );
-                          }
-                        );
+                        Method.buildShowModalPopup(context, fileData: widget.fileData);
                       },
                     ),
                   ),
@@ -129,4 +109,6 @@ class _ConfirmPassState extends State<ConfirmPass> {
       ),
     );
   }
+
+
 }

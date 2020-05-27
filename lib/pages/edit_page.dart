@@ -5,8 +5,9 @@ import 'package:starter_course/utils/db_provider.dart';
 
 class EditPage extends StatefulWidget {
 
-  final FileData saveData;
-  EditPage(this.saveData);
+  final FileData fileData;
+  final FolderData folderData;
+  EditPage({this.fileData, this.folderData});
 
   @override
   _EditPageState createState() => _EditPageState();
@@ -20,7 +21,7 @@ class _EditPageState extends State<EditPage> {
 
   void editPassword() async{
     FileData _fileData = FileData(
-      id: widget.saveData.id,
+      id: widget.fileData.id,
       title: titleController.text,
       passId: idController.text,
       passPw: pwController.text,
