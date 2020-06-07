@@ -185,7 +185,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> buildShowModalBottomSheet({FileData fileData, FolderData folderData}) {
     return showModalBottomSheet(
-        context: context, builder: (BuildContext context) {
+      context: context, builder: (BuildContext context) {
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
